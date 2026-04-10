@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>Apsara Realcon — Pitch Deck</title>
+<meta name="description" content="₹15L → ₹23.25L in 30 months. Land-backed monthly income programme.">
+<meta name="theme-color" content="#080f0b">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#080f0b;--bg2:#0c1a12;--bg3:#101f16;
+--card:#152b1e;--card2:#1a3a2a;
+--lime:#8bc34a;--lime-soft:#a8c96e;--lime-glow:rgba(139,195,74,0.08);
+--gold:#d4a843;--gold-glow:rgba(212,168,67,0.06);
+--white:#fff;--t1:rgba(255,255,255,0.93);--t2:rgba(255,255,255,0.6);--t3:rgba(255,255,255,0.35);
+--border:rgba(255,255,255,0.06);
+--r:16px;--rs:10px;
+--font-h:'Playfair Display',Georgia,serif;
+--font-b:'Inter',system-ui,sans-serif;
+--ease:cubic-bezier(0.25,0.46,0.45,0.94);
+}
+html{font-size:16px}
+body{font-family:var(--font-b);background:var(--bg);color:var(--t1);overflow:hidden;height:100vh;height:100dvh;width:100vw;-webkit-font-smoothing:antialiased}
+
+/* ===== CHROME ===== */
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--lime),var(--gold));z-index:100;transition:width .5s ease;box-shadow:0 0 20px rgba(139,195,74,0.5)}
+#slideNum{position:fixed;top:16px;right:16px;z-index:99;font:600 11px var(--font-b);color:var(--t3);letter-spacing:2px}
+#audioCtrl{position:fixed;top:16px;left:16px;z-index:99;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:5px 12px;border-radius:var(--rs);backdrop-filter:blur(20px);cursor:pointer}
+#audioCtrl:hover{border-color:rgba(139,195,74,0.2)}
+#audioBtn{background:none;border:none;color:var(--t2);font-size:16px;cursor:pointer;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+#audioBtn.on{color:var(--lime)}
+.wave{display:flex;gap:2px;align-items:center;height:16px}
+.wave i{display:block;width:2.5px;border-radius:2px;background:var(--lime);opacity:.2;transition:height .15s}
+.wave.on i{opacity:1;animation:w .7s ease-in-out infinite alternate}
+.wave i:nth-child(1){height:4px;animation-delay:0s}.wave i:nth-child(2){height:10px;animation-delay:.08s}
+.wave i:nth-child(3){height:6px;animation-delay:.16s}.wave i:nth-child(4){height:14px;animation-delay:.24s}
+.wave i:nth-child(5){height:8px;animation-delay:.12s}
+@keyframes w{to{height:16px}}
+#audioLbl{font:500 9px var(--font-b);color:var(--t3);letter-spacing:1px;text-transform:uppercase}
+@media(max-width:480px){#audioLbl{display:none}}
+
+.arrow{position:fixed;top:50%;z-index:99;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;backdrop-filter:blur(16px);transition:.3s var(--ease)}
+.arrow:hover{background:var(--lime);color:var(--bg);transform:translateY(-50%) scale(1.1)}
+#prev{left:16px}#next{right:16px}
+@media(max-width:480px){.arrow{width:34px;height:34px;font-size:14px}#prev{left:8px}#next{right:8px}}
+
+#dots{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99;display:flex;gap:12px}
+.dt{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);border:none;cursor:pointer;transition:.3s var(--ease)}
+.dt.on{background:var(--lime);transform:scale(1.5);box-shadow:0 0 12px rgba(139,195,74,0.5)}
+@media(max-width:480px){#dots{bottom:18px;gap:10px}.dt{width:7px;height:7px}}
+
+/* ===== SLIDES ===== */
+#deck{position:relative;width:100%;height:100%}
+.sl{position:absolute;inset:0;opacity:0;pointer-events:none;display:flex;align-items:center;justify-content:center;transition:opacity .7s ease,transform .7s ease;overflow-y:auto}
+.sl.active{opacity:1;pointer-events:auto;transform:none!important}
+.sl.out-up{transform:translateY(-50px)}.sl.out-dn{transform:translateY(50px)}
+.sl.in-up{transform:translateY(-50px)}.sl.in-dn{transform:translateY(50px)}
+.sl-inner{width:100%;max-width:960px;padding:60px 40px 80px;position:relative;z-index:2}
+@media(max-width:480px){.sl-inner{padding:48px 20px 72px}}
+
+/* ===== ANIMS ===== */
+.fi{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fi.v{opacity:1;transform:none}
+.fi2{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.fi2.v{opacity:1;transform:none}
+
+/* ===== S1: HOOK ===== */
+#p1{background:radial-gradient(ellipse at 30% 50%,var(--bg3),var(--bg) 70%);text-align:center}
+#p1::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 70% 20%,rgba(139,195,74,0.04),transparent 60%)}
+#p1::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 80%,rgba(212,168,67,0.03),transparent 50%)}
+.hook-tag{font:600 11px var(--font-b);letter-spacing:4px;text-transform:uppercase;color:var(--lime);opacity:.7;margin-bottom:20px}
+.hook-big{font:900 clamp(42px,8vw,96px) var(--font-h);color:var(--white);line-height:1;letter-spacing:-2px;margin-bottom:6px}
+.hook-big .gold{color:var(--gold)}
+.hook-arr{font:300 clamp(28px,5vw,56px) var(--font-b);color:var(--t3);margin:0 clamp(8px,2vw,20px)}
+.hook-sub{font:400 clamp(15px,2vw,22px) var(--font-b);color:var(--t2);margin:20px 0 10px;line-height:1.5}
+.hook-sub2{font:300 clamp(13px,1.4vw,16px) var(--font-b);color:var(--t3);margin-bottom:36px}
+.hook-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 28px}
+.hook-brand{font:700 clamp(11px,1.3vw,14px) var(--font-b);letter-spacing:8px;color:var(--lime);opacity:.6;text-transform:uppercase}
+@media(max-width:480px){
+  .hook-big{letter-spacing:-1px;line-height:1.05}
+  .hook-arr{margin:0 6px}
+  .hook-sub{font-size:14px;margin:14px 0 6px}
+  .hook-brand{letter-spacing:5px;font-size:10px}
+}
+
+/* ===== S2: HOW ===== */
+#p2{background:var(--bg2)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+@media(max-width:768px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.steps{grid-template-columns:1fr;gap:12px}}
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px 22px;position:relative;overflow:hidden;opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease}
+.step.v{opacity:1;transform:none}
+.step:hover{border-color:rgba(139,195,74,.15)}
+.step-num{font:800 48px var(--font-h);color:rgba(139,195,74,.08);position:absolute;top:-6px;right:8px;line-height:1}
+.step-icon{font-size:28px;margin-bottom:12px}
+.step-title{font:700 15px var(--font-b);color:var(--white);margin-bottom:8px}
+.step-desc{font:400 13px var(--font-b);color:var(--t3);line-height:1.6}
+.step-val{font:800 20px var(--font-h);color:var(--lime);margin-top:12px}
+.mou-bar{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--rs);padding:18px 24px;margin-top:28px;display:flex;align-items:center;gap:14px}
+.mou-bar .icon{font-size:24px}
+.mou-bar .txt{font:500 14px var(--font-b);color:var(--t2);line-height:1.6}
+.mou-bar .txt strong{color:var(--gold)}
+@media(max-width:480px){.step{padding:20px 16px}.step-val{font-size:18px}.mou-bar{flex-direction:column;text-align:center;gap:8px;padding:16px}}
+
+/* ===== S3: RETURNS ===== */
+#p3{background:var(--bg)}
+.returns-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}
+@media(max-width:768px){.returns-grid{grid-template-columns:1fr}}
+.ret-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:32px;position:relative;overflow:hidden}
+.ret-card.exit-a{border-top:3px solid var(--gold)}
+.ret-card.exit-b{border-top:3px solid var(--lime)}
+.ret-label{font:600 10px var(--font-b);letter-spacing:2.5px;text-transform:uppercase;color:var(--lime);margin-bottom:6px}
+.ret-title{font:800 22px var(--font-h);color:var(--white);margin-bottom:16px}
+.ret-num{font:800 clamp(32px,5vw,48px) var(--font-h);margin-bottom:4px}
+.ret-num.gold{color:var(--gold)}
+.ret-num.lime{color:var(--lime)}
+.ret-detail{font:400 13px var(--font-b);color:var(--t3);line-height:1.7;margin-top:12px}
+.ret-tag{display:inline-block;font:700 11px var(--font-b);letter-spacing:1px;padding:6px 14px;border-radius:20px;margin-top:14px}
+.ret-tag.gold{background:var(--gold-glow);color:var(--gold);border:1px solid rgba(212,168,67,.15)}
+.ret-tag.lime{background:var(--lime-glow);color:var(--lime);border:1px solid rgba(139,195,74,.15)}
+
+.flow-bar{display:flex;align-items:center;justify-content:center;gap:0;margin-top:28px;flex-wrap:wrap}
+.flow-item{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:14px 20px;text-align:center}
+.flow-item .fl-val{font:800 18px var(--font-h);color:var(--lime)}
+.flow-item .fl-lbl{font:400 10px var(--font-b);color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.flow-plus{font:700 20px var(--font-b);color:var(--t3);padding:0 12px}
+.flow-eq{font:700 20px var(--font-b);color:var(--lime);padding:0 12px}
+@media(max-width:480px){.ret-card{padding:22px}.ret-title{font-size:18px}.ret-num{font-size:28px}.flow-item{padding:10px 14px}.flow-item .fl-val{font-size:15px}.flow-plus,.flow-eq{padding:0 6px;font-size:16px}}
+
+/* ===== S4: WHY NOW ===== */
+#p4{background:var(--bg2)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}
+@media(max-width:768px){.why-grid{grid-template-columns:1fr}}
+.why-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px}
+.why-card h3{font:700 16px var(--font-h);color:var(--gold);margin-bottom:16px}
+.why-item{display:flex;gap:12px;margin-bottom:16px;align-items:flex-start}
+.why-dot{width:8px;height:8px;border-radius:50%;background:var(--lime);margin-top:6px;flex-shrink:0;box-shadow:0 0 8px rgba(139,195,74,.3)}
+.why-txt{font:400 14px var(--font-b);color:var(--t2);line-height:1.6}
+.why-txt strong{color:var(--white);font-weight:600}
+.entry-card{background:linear-gradient(135deg,rgba(139,195,74,.08),rgba(139,195,74,.03));border:1px solid rgba(139,195,74,.12);border-radius:var(--r);padding:24px;text-align:center;margin-top:24px}
+.entry-card .ec-val{font:900 clamp(28px,4vw,40px) var(--font-h);color:var(--lime)}
+.entry-card .ec-lbl{font:400 13px var(--font-b);color:var(--t3);margin-top:4px}
+.verify-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;justify-content:center}
+.vr-chip{font:600 10px var(--font-b);letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:20px;background:rgba(255,255,255,.04);color:var(--t2);border:1px solid var(--border)}
+@media(max-width:480px){.why-card{padding:20px}.why-txt{font-size:13px}}
+
+/* ===== S5: CTA ===== */
+#p5{background:radial-gradient(ellipse at 50% 50%,var(--bg3),var(--bg) 70%);text-align:center}
+#p5::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(139,195,74,.04),transparent 50%)}
+.cta-headline{font:900 clamp(28px,5vw,52px) var(--font-h);color:var(--white);line-height:1.15;margin-bottom:8px;letter-spacing:-0.5px}
+.cta-sub{font:400 clamp(14px,1.6vw,18px) var(--font-b);color:var(--t2);margin-bottom:36px}
+.cta-contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:600px;margin:0 auto 28px}
+@media(max-width:600px){.cta-contacts{grid-template-columns:1fr;max-width:300px}}
+.cta-c{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:20px 16px;text-align:center;transition:.3s var(--ease)}
+.cta-c:hover{border-color:rgba(139,195,74,.2);transform:translateY(-3px)}
+.cta-c .ic{font-size:24px;margin-bottom:8px}
+.cta-c .lb{font:700 9px var(--font-b);letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:4px}
+.cta-c .vl{font:500 14px var(--font-b);color:var(--t1);line-height:1.4}
+@media(max-width:480px){.cta-c{padding:16px 12px}.cta-c .vl{font-size:13px}}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:var(--lime);color:var(--bg);font:700 14px var(--font-b);padding:16px 40px;border-radius:var(--rs);border:none;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;transition:.3s var(--ease);box-shadow:0 0 40px rgba(139,195,74,.2)}
+.cta-btn:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,168,67,.25)}
+.cta-legal{font:400 10px var(--font-b);color:var(--t3);max-width:500px;margin:24px auto 0;line-height:1.6}
+
+/* PRINT */
+@media print{
+#progress,.arrow,#dots,#slideNum,#audioCtrl{display:none!important}
+#deck{height:auto;overflow:visible}
+.sl{position:relative!important;opacity:1!important;transform:none!important;pointer-events:auto!important;page-break-after:always;min-height:100vh}
+.fi,.fi2,.step{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<div id="progress" style="width:20%"></div>
+<div id="slideNum">1 / 5</div>
+<div id="audioCtrl" onclick="toggleAudio()">
+  <button id="audioBtn" aria-label="Toggle narration">&#9655;</button>
+  <div class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i></div>
+  <span id="audioLbl">Play Narration</span>
+</div>
+<button class="arrow" id="prev" onclick="nav(cur-1)">&#8592;</button>
+<button class="arrow" id="next" onclick="nav(cur+1)">&#8594;</button>
+<div id="dots"></div>
+
+<div id="deck">
+
+<!-- ==================== SLIDE 1: HOOK ==================== -->
+<section class="sl active" id="p1">
+  <div class="sl-inner">
+    <div class="hook-tag fi">APSARA REALCON</div>
+    <div class="hook-line fi" style="transition-delay:.1s"></div>
+    <div class="fi2" style="transition-delay:.15s">
+      <span class="hook-big">&#8377;15L</span>
+      <span class="hook-arr">&#8594;</span>
+      <span class="hook-big gold">&#8377;23.25L</span>
+    </div>
+    <p class="hook-sub fi" style="transition-delay:.3s">in <strong style="color:var(--white)">30 months</strong>. Land you can see, touch, and own.</p>
+    <p class="hook-sub2 fi" style="transition-delay:.4s">55% total return &middot; 12% annual income &middot; Court-enforceable MOU</p>
+    <div class="hook-brand fi" style="transition-delay:.55s">Growth Partner Programme</div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 2: HOW IT WORKS ==================== -->
+<section class="sl" id="p2">
+  <div class="sl-inner">
+    <div class="fi" style="transition-delay:.05s"><span style="font:600 11px var(--font-b);letter-spacing:3px;text-transform:uppercase;color:var(--lime);opacity:.7">The Structure</span></div>
+    <h2 class="fi" style="font:800 clamp(26px,4vw,42px) var(--font-h);color:var(--white);margin:12px 0 4px;letter-spacing:-.3px;transition-delay:.1s">Four Steps. Zero Ambiguity.</h2>
+    <p class="fi" style="font:400 clamp(13px,1.4vw,16px) var(--font-b);color:var(--t2);margin-bottom:0;transition-delay:.15s">Every term documented before you invest.</p>
+
+    <div class="steps">
+      <div class="step" style="transition-delay:.2s">
+        <div class="step-num">01</div>
+        <div class="step-icon">&#128176;</div>
+        <div class="step-title">Invest &#8377;15 Lakhs</div>
+        <div class="step-desc">A 1,500 sq.ft plot in Greater Bhubaneswar is identified and linked to your name.</div>
+        <div class="step-val">1,500 Sq.Ft</div>
+      </div>
+      <div class="step" style="transition-delay:.3s">
+        <div class="step-num">02</div>
+        <div class="step-icon">&#128181;</div>
+        <div class="step-title">Earn Every Month</div>
+        <div class="step-desc">&#8377;15,000 deposited to your bank via NEFT/RTGS. 12% annual, contractually committed.</div>
+        <div class="step-val">&#8377;15,000/mo</div>
+      </div>
+      <div class="step" style="transition-delay:.4s">
+        <div class="step-num">03</div>
+        <div class="step-icon">&#128197;</div>
+        <div class="step-title">30 Months of Income</div>
+        <div class="step-desc">Accumulate &#8377;4.50 Lakhs in total payouts while your land appreciates in value.</div>
+        <div class="step-val">&#8377;4.50L Total</div>
+      </div>
+      <div class="step" style="transition-delay:.5s">
+        <div class="step-num">04</div>
+        <div class="step-icon">&#128274;</div>
+        <div class="step-title">Choose Your Exit</div>
+        <div class="step-desc">Keep the land (Sale Deed, &#8377;30L+ value) or take the buyback (&#8377;18.75L + income kept).</div>
+        <div class="step-val">Your Choice</div>
+      </div>
+    </div>
+
+    <div class="mou-bar fi" style="transition-delay:.6s">
+      <div class="icon">&#128220;</div>
+      <div class="txt"><strong>Stamped MOU</strong> executed before any investment — court-enforceable under the Indian Contract Act, 1872. Every term above is contractually documented.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 3: RETURNS ==================== -->
+<section class="sl" id="p3">
+  <div class="sl-inner">
+    <div class="fi"><span style="font:600 11px var(--font-b);letter-spacing:3px;text-transform:uppercase;color:var(--lime);opacity:.7">Your Returns</span></div>
+    <h2 class="fi" style="font:800 clamp(26px,4vw,42px) var(--font-h);color:var(--white);margin:12px 0 4px;letter-spacing:-.3px;transition-delay:.1s">Two Exits. Both Profitable.</h2>
+    <p class="fi" style="font:400 clamp(13px,1.4vw,16px) var(--font-b);color:var(--t2);transition-delay:.15s">Choose certainty or choose wealth. Both documented in your MOU.</p>
+
+    <div class="returns-grid">
+      <div class="ret-card exit-a fi2" style="transition-delay:.2s">
+        <div class="ret-label">Option A &middot; Retain</div>
+        <div class="ret-title">Keep the Land</div>
+        <div class="ret-num gold">&#8377;30L+</div>
+        <div style="font:500 12px var(--font-b);color:var(--t3)">Conservative projected value</div>
+        <div class="ret-detail">Receive your registered Sale Deed after RERA. Comparable corridors have delivered 2.5&#215;&#8211;4&#215; appreciation. Plus &#8377;4.50L income already in your bank.</div>
+        <div class="ret-tag gold">Wealth Path</div>
+      </div>
+      <div class="ret-card exit-b fi2" style="transition-delay:.35s">
+        <div class="ret-label">Option B &middot; Buyback</div>
+        <div class="ret-title">Take the Cash</div>
+        <div class="ret-num lime">&#8377;23.25L</div>
+        <div style="font:500 12px var(--font-b);color:var(--t3)">Guaranteed total cash</div>
+        <div class="ret-detail">&#8377;18.75L buyback (25% premium) + &#8377;4.50L income already received. 55% total return on &#8377;15L in 30 months. Zero guesswork.</div>
+        <div class="ret-tag lime">Certainty Path</div>
+      </div>
+    </div>
+
+    <div class="flow-bar fi" style="transition-delay:.5s">
+      <div class="flow-item"><div class="fl-val">&#8377;15L</div><div class="fl-lbl">You Invest</div></div>
+      <div class="flow-plus">+</div>
+      <div class="flow-item"><div class="fl-val">&#8377;4.50L</div><div class="fl-lbl">Income</div></div>
+      <div class="flow-plus">+</div>
+      <div class="flow-item"><div class="fl-val">&#8377;18.75L</div><div class="fl-lbl">Buyback</div></div>
+      <div class="flow-eq">=</div>
+      <div class="flow-item" style="border-color:rgba(139,195,74,.2);background:var(--lime-glow)"><div class="fl-val" style="font-size:22px">&#8377;23.25L</div><div class="fl-lbl">Total Cash</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 4: WHY NOW ==================== -->
+<section class="sl" id="p4">
+  <div class="sl-inner">
+    <div class="fi"><span style="font:600 11px var(--font-b);letter-spacing:3px;text-transform:uppercase;color:var(--lime);opacity:.7">Location &middot; Timing &middot; Protection</span></div>
+    <h2 class="fi" style="font:800 clamp(26px,4vw,42px) var(--font-h);color:var(--white);margin:12px 0 4px;letter-spacing:-.3px;transition-delay:.1s">Why This. Why Now.</h2>
+    <p class="fi" style="font:400 clamp(13px,1.4vw,16px) var(--font-b);color:var(--t2);transition-delay:.15s">Bajpur, Khordha — inside Odisha's fastest-growing corridor.</p>
+
+    <div class="why-grid">
+      <div class="why-card fi2" style="transition-delay:.2s">
+        <h3>&#127961;&#65039; Growth Drivers</h3>
+        <div class="why-item"><div class="why-dot"></div><div class="why-txt"><strong>Smart City Initiative</strong> — state-capital expansion accelerating infrastructure</div></div>
+        <div class="why-item"><div class="why-dot"></div><div class="why-txt"><strong>Industrial Corridor</strong> — one of India's most active infra zones</div></div>
+        <div class="why-item"><div class="why-dot"></div><div class="why-txt"><strong>Master Plan Zone</strong> — formally notified Greater Bhubaneswar expansion area</div></div>
+      </div>
+      <div class="why-card fi2" style="transition-delay:.35s">
+        <h3>&#128737;&#65039; Your Protection</h3>
+        <div class="why-item"><div class="why-dot"></div><div class="why-txt"><strong>Stamped MOU</strong> — court-enforceable under Indian Contract Act, 1872</div></div>
+        <div class="why-item"><div class="why-dot"></div><div class="why-txt"><strong>MCA-registered company</strong> — Apsara Realcon Pvt. Ltd., verifiable online</div></div>
+        <div class="why-item"><div class="why-dot"></div><div class="why-txt"><strong>Bank-only payments</strong> — NEFT/RTGS, fully auditable trail</div></div>
+      </div>
+    </div>
+
+    <div class="entry-card fi" style="transition-delay:.5s">
+      <div class="ec-val">&#8377;1,000 / sq.ft</div>
+      <div class="ec-lbl">Phase 1 entry price &middot; Before RERA &middot; Before price discovery</div>
+    </div>
+
+    <div class="verify-row fi" style="transition-delay:.6s">
+      <span class="vr-chip">&#128270; mca.gov.in</span>
+      <span class="vr-chip">&#128270; bhulekh.odisha.gov.in</span>
+      <span class="vr-chip">&#128270; Review MOU with your lawyer</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 5: CTA ==================== -->
+<section class="sl" id="p5">
+  <div class="sl-inner">
+    <div class="fi" style="transition-delay:.05s"><span style="font:700 11px var(--font-b);letter-spacing:3px;text-transform:uppercase;padding:8px 20px;border-radius:24px;background:var(--lime-glow);color:var(--lime);border:1px solid rgba(139,195,74,.12)">Limited Phase 1 Plots</span></div>
+    <h2 class="cta-headline fi" style="margin-top:24px;transition-delay:.15s">Become a<br><em style="color:var(--lime);font-style:italic">Growth Partner</em></h2>
+    <p class="cta-sub fi" style="transition-delay:.25s">&#8377;15L &middot; 30 months &middot; 55% secured return — or hold for multifold growth.</p>
+
+    <div class="cta-contacts">
+      <div class="cta-c fi" style="transition-delay:.3s"><div class="ic">&#128222;</div><div class="lb">Call / WhatsApp</div><div class="vl">93485 31992</div></div>
+      <div class="cta-c fi" style="transition-delay:.4s"><div class="ic">&#9993;&#65039;</div><div class="lb">Email</div><div class="vl">info@apsararealcon.in</div></div>
+      <div class="cta-c fi" style="transition-delay:.5s"><div class="ic">&#127760;</div><div class="lb">Website</div><div class="vl">apsararealcon.in</div></div>
+    </div>
+
+    <div class="fi" style="transition-delay:.6s">
+      <button class="cta-btn" onclick="window.open('https://asha8-8.github.io/apsara-growth-programme/','_blank')">View Full Presentation &#10132;</button>
+    </div>
+
+    <p class="cta-legal fi" style="transition-delay:.7s">
+      Pre-RERA structure. MOU governs terms. Independent due diligence advised.
+      &#169; 2026 Apsara Realcon Pvt. Ltd.
+    </p>
+  </div>
+</section>
+
+</div>
+
+<script>
+const slides=document.querySelectorAll('.sl'),total=slides.length;
+let cur=0,autoT=null;
+const names=['Hook','How It Works','Your Returns','Why Now','Contact'];
+
+// Dots
+const dots=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('button');d.className='dt'+(i===0?' on':'');d.onclick=()=>nav(i);dots.appendChild(d)}
+
+function go(idx){
+  if(idx<0||idx>=total||idx===cur)return;
+  const fwd=idx>cur,prev=cur;
+  slides[prev].classList.remove('active');
+  slides[prev].classList.add(fwd?'out-up':'out-dn');
+  slides[idx].classList.add(fwd?'in-dn':'in-up');
+  void slides[idx].offsetWidth;
+  cur=idx;
+  slides[cur].classList.add('active');
+  slides[cur].classList.remove('in-dn','in-up');
+  setTimeout(()=>slides[prev].classList.remove('out-up','out-dn'),700);
+  slides[cur].scrollTop=0;
+  updateUI();anim(cur);
+  setTimeout(()=>playAudio(cur),300);
+}
+function nav(i){stopAuto();go(i)}
+function updateUI(){
+  document.getElementById('progress').style.width=((cur+1)/total*100)+'%';
+  document.getElementById('slideNum').textContent=(cur+1)+' / '+total;
+  document.querySelectorAll('.dt').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  const p=document.getElementById('prev'),n=document.getElementById('next');
+  p.style.opacity=cur===0?'.3':'1';p.style.pointerEvents=cur===0?'none':'auto';
+  n.style.opacity=cur===total-1?'.3':'1';n.style.pointerEvents=cur===total-1?'none':'auto';
+}
+
+// Auto (only when audio off)
+function startAuto(){stopAuto();if(audioOn&&playing)return;autoT=setInterval(()=>go(cur<total-1?cur+1:0),8000)}
+function stopAuto(){if(autoT){clearInterval(autoT);autoT=null}}
+
+// Keys + touch
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')nav(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')nav(cur-1);
+  if(e.key==='m'||e.key==='M')toggleAudio();
+});
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX},{passive:true});
+document.addEventListener('touchend',e=>{const d=e.changedTouches[0].screenX-tx;if(Math.abs(d)>50){d<0?nav(cur+1):nav(cur-1)}},{passive:true});
+
+// Animate
+function anim(idx){
+  const s=slides[idx];
+  s.querySelectorAll('.fi,.fi2,.step').forEach((el,i)=>{
+    const d=parseFloat(el.style.transitionDelay)||(i*.08);
+    setTimeout(()=>el.classList.add('v'),d*1000);
+  });
+}
+
+// Audio
+const ap=new Audio();let audioOn=false,playing=false;
+const af={};for(let i=1;i<=5;i++)af[i]='audio/pitch/p'+i+'.mp3';
+
+function toggleAudio(){
+  audioOn=!audioOn;
+  const b=document.getElementById('audioBtn'),l=document.getElementById('audioLbl'),w=document.getElementById('wave');
+  if(audioOn){b.innerHTML='&#9646;&#9646;';b.classList.add('on');l.textContent='Playing';playAudio(cur)}
+  else{b.innerHTML='&#9655;';b.classList.remove('on');w.classList.remove('on');l.textContent='Play Narration';ap.pause();ap.currentTime=0;playing=false;startAuto()}
+}
+function playAudio(idx){
+  if(!audioOn)return;
+  stopAuto();
+  ap.pause();ap.currentTime=0;ap.src=af[idx+1];
+  ap.play().then(()=>{playing=true;document.getElementById('wave').classList.add('on');document.getElementById('audioLbl').textContent=names[idx]}).catch(()=>{document.getElementById('audioLbl').textContent='Tap to play'});
+}
+ap.addEventListener('ended',()=>{
+  playing=false;document.getElementById('wave').classList.remove('on');
+  if(audioOn){setTimeout(()=>{if(cur<total-1)go(cur+1);else{document.getElementById('audioLbl').textContent='Done';document.getElementById('audioBtn').innerHTML='&#9655;';audioOn=false}},1200)}
+  else startAuto();
+});
+
+anim(0);startAuto();updateUI();
+</script>
+</body>
+</html>

@@ -64,27 +64,52 @@ body{font-family:var(--fb);background:var(--bg);color:var(--t1);overflow:hidden;
 .f{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
 .f.v{opacity:1;transform:none}
 
-/* === CINEMATIC BG EFFECTS === */
+/* === CINEMATIC BG EFFECTS (VISIBLE) === */
 .mesh{position:absolute;inset:0;overflow:hidden;z-index:1;pointer-events:none}
-.mesh .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0;animation:blobIn 1.5s ease forwards}
+.mesh .blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:0;animation:blobIn 2s ease forwards}
 @keyframes blobIn{to{opacity:1}}
-.mesh .b1{width:500px;height:500px;background:radial-gradient(circle,rgba(139,195,74,.06),transparent 70%);animation-delay:.2s}
-.mesh .b2{width:400px;height:400px;background:radial-gradient(circle,rgba(212,168,67,.04),transparent 70%);animation-delay:.5s}
-.mesh .b3{width:300px;height:300px;background:radial-gradient(circle,rgba(139,195,74,.05),transparent 70%);animation-delay:.8s}
+.mesh .b1{width:600px;height:600px;background:radial-gradient(circle,rgba(139,195,74,.18),transparent 65%);animation-delay:.2s}
+.mesh .b2{width:500px;height:500px;background:radial-gradient(circle,rgba(212,168,67,.12),transparent 65%);animation-delay:.6s}
+.mesh .b3{width:350px;height:350px;background:radial-gradient(circle,rgba(139,195,74,.15),transparent 65%);animation-delay:.9s}
+/* Blob slow drift */
+.mesh .b1{animation:blobIn 2s ease forwards,blobDrift1 20s ease-in-out infinite 2s}
+.mesh .b2{animation:blobIn 2s ease forwards,blobDrift2 25s ease-in-out infinite 2.5s}
+.mesh .b3{animation:blobIn 2s ease forwards,blobDrift3 18s ease-in-out infinite 3s}
+@keyframes blobDrift1{0%,100%{transform:translate(0,0)}33%{transform:translate(40px,-30px)}66%{transform:translate(-30px,40px)}}
+@keyframes blobDrift2{0%,100%{transform:translate(0,0)}33%{transform:translate(-50px,30px)}66%{transform:translate(30px,-40px)}}
+@keyframes blobDrift3{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,30px)}}
 
-/* Animated grid lines */
-.grid-bg{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.03;
-background-image:linear-gradient(rgba(139,195,74,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(139,195,74,.3) 1px,transparent 1px);
-background-size:60px 60px}
+/* Grid lines - visible */
+.grid-bg{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.06;
+background-image:linear-gradient(rgba(139,195,74,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(139,195,74,.5) 1px,transparent 1px);
+background-size:80px 80px}
 
-/* Light streak */
-.streak{position:absolute;z-index:2;pointer-events:none;width:200px;height:1px;background:linear-gradient(90deg,transparent,rgba(139,195,74,.15),transparent);animation:streakMove 8s linear infinite}
-@keyframes streakMove{0%{transform:translateX(-300px) rotate(-25deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateX(calc(100vw + 300px)) rotate(-25deg);opacity:0}}
+/* Light streak - brighter, wider */
+.streak{position:absolute;z-index:2;pointer-events:none;width:400px;height:2px;background:linear-gradient(90deg,transparent,rgba(139,195,74,.35),rgba(212,168,67,.2),transparent);animation:streakMove 7s linear infinite;filter:blur(1px)}
+@keyframes streakMove{0%{transform:translateX(-500px) rotate(-20deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateX(calc(100vw + 500px)) rotate(-20deg);opacity:0}}
 
-/* Floating particles */
+/* Floating particles - bigger, brighter */
 .particles{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-.pt{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--lime);opacity:0;animation:ptFloat linear infinite}
-@keyframes ptFloat{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.4}90%{opacity:.4}100%{transform:translateY(-20px) scale(1);opacity:0}}
+.pt{position:absolute;border-radius:50%;background:var(--lime);opacity:0;animation:ptFloat linear infinite}
+@keyframes ptFloat{0%{transform:translateY(100vh) scale(0);opacity:0}15%{opacity:.7}85%{opacity:.7}100%{transform:translateY(-40px) scale(1);opacity:0}}
+
+/* Glowing ring accents */
+.glow-ring{position:absolute;border-radius:50%;border:1px solid rgba(139,195,74,.12);z-index:1;pointer-events:none;animation:ringPulse 6s ease-in-out infinite}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.08);opacity:.6}}
+
+/* Corner accent lines */
+.corner-line{position:absolute;z-index:2;pointer-events:none}
+.corner-line::before,.corner-line::after{content:"";position:absolute;background:var(--lime);opacity:.15}
+.cl-tl{top:30px;left:30px}.cl-tl::before{width:40px;height:1px;top:0;left:0}.cl-tl::after{width:1px;height:40px;top:0;left:0}
+.cl-br{bottom:60px;right:30px}.cl-br::before{width:40px;height:1px;bottom:0;right:0}.cl-br::after{width:1px;height:40px;bottom:0;right:0}
+@media(max-width:480px){.cl-tl,.cl-br{display:none}.glow-ring{display:none}}
+
+/* === SLIDE BG VARIETY === */
+#p1{background:linear-gradient(160deg,#040a06 0%,#0a1a10 40%,#0e2518 100%)}
+#p2{background:linear-gradient(160deg,#081410 0%,#0c1e14 100%)}
+#p3{background:linear-gradient(160deg,#060e09 0%,#0b1a12 60%,#0e1f16 100%)}
+#p4{background:linear-gradient(160deg,#081410 0%,#0c1e14 100%)}
+#p5{background:linear-gradient(160deg,#0a1610 0%,#0e2518 50%,#081410 100%)}
 
 /* === S1: HOOK === */
 #p1{text-align:center}
@@ -106,7 +131,7 @@ background-size:60px 60px}
 @media(max-width:768px){.steps{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.steps{grid-template-columns:1fr;gap:10px}}
 .stp{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:28px 22px;position:relative;overflow:hidden;transition:.4s var(--ez)}
-.stp:hover{border-color:rgba(139,195,74,.12);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.stp:hover{border-color:rgba(139,195,74,.2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3),0 0 30px rgba(139,195,74,.06)}
 .stp-n{font:800 64px var(--fh);position:absolute;top:-12px;right:6px;line-height:1;background:linear-gradient(180deg,rgba(139,195,74,.06),transparent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .stp-i{font-size:28px;margin-bottom:14px;display:block}
 .stp-t{font:700 15px var(--fb);color:var(--w);margin-bottom:8px}
@@ -123,7 +148,7 @@ background-size:60px 60px}
 .rg{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
 @media(max-width:768px){.rg{grid-template-columns:1fr}}
 .rc{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:32px;position:relative;overflow:hidden;transition:.4s var(--ez)}
-.rc:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.rc:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.3),0 0 40px rgba(139,195,74,.05)}
 .rc.ea{border-top:2px solid var(--gold)}
 .rc.eb{border-top:2px solid var(--lime)}
 /* Glow effect inside card */
@@ -192,7 +217,7 @@ background-size:60px 60px}
 
 /* PRINT */
 @media print{
-#bar,.ar,#dt,#sn,#ac,.mesh,.grid-bg,.streak,.particles{display:none!important}
+#bar,.ar,#dt,#sn,#ac,.mesh,.grid-bg,.streak,.particles,.glow-ring,.corner-line{display:none!important}
 #dk{height:auto;overflow:visible}
 .s{position:relative!important;opacity:1!important;transform:none!important;pointer-events:auto!important;page-break-after:always;min-height:100vh}
 .f,.stp{opacity:1!important;transform:none!important}
@@ -217,14 +242,18 @@ background-size:60px 60px}
 <!-- ===== S1: HOOK ===== -->
 <section class="s a" id="p1">
   <div class="mesh">
-    <div class="blob b1" style="top:-10%;right:-5%"></div>
-    <div class="blob b2" style="bottom:-10%;left:-5%"></div>
-    <div class="blob b3" style="top:40%;left:50%"></div>
+    <div class="blob b1" style="top:-15%;right:-10%"></div>
+    <div class="blob b2" style="bottom:-15%;left:-10%"></div>
+    <div class="blob b3" style="top:35%;left:45%"></div>
   </div>
   <div class="grid-bg"></div>
   <div class="particles" id="pt1"></div>
-  <div class="streak" style="top:30%"></div>
-  <div class="streak" style="top:65%;animation-delay:4s"></div>
+  <div class="streak" style="top:25%"></div>
+  <div class="streak" style="top:68%;animation-delay:3.5s"></div>
+  <div class="glow-ring" style="width:300px;height:300px;top:10%;right:5%"></div>
+  <div class="glow-ring" style="width:200px;height:200px;bottom:15%;left:8%;animation-delay:3s"></div>
+  <div class="corner-line cl-tl"></div>
+  <div class="corner-line cl-br"></div>
   <div class="si">
     <div class="h-brand f" style="transition-delay:.05s">APSARA REALCON</div>
     <div class="h-line f" style="transition-delay:.15s"></div>
@@ -246,12 +275,17 @@ background-size:60px 60px}
 <!-- ===== S2: HOW ===== -->
 <section class="s" id="p2">
   <div class="mesh">
-    <div class="blob b1" style="top:10%;left:-8%"></div>
-    <div class="blob b3" style="bottom:5%;right:-5%"></div>
+    <div class="blob b1" style="top:5%;left:-10%"></div>
+    <div class="blob b2" style="bottom:0;right:-8%"></div>
+    <div class="blob b3" style="top:50%;right:30%"></div>
   </div>
   <div class="grid-bg"></div>
-  <div class="streak" style="top:20%;animation-delay:2s"></div>
+  <div class="streak" style="top:18%;animation-delay:2s"></div>
+  <div class="streak" style="top:75%;animation-delay:5s"></div>
   <div class="particles" id="pt2"></div>
+  <div class="glow-ring" style="width:250px;height:250px;bottom:10%;right:5%;animation-delay:2s"></div>
+  <div class="corner-line cl-tl"></div>
+  <div class="corner-line cl-br"></div>
   <div class="si">
     <div class="sh-tag f" style="transition-delay:.05s">The Structure</div>
     <h2 class="sh-title f" style="transition-delay:.12s">Four Steps. Zero Ambiguity.</h2>
@@ -296,12 +330,17 @@ background-size:60px 60px}
 <!-- ===== S3: RETURNS ===== -->
 <section class="s" id="p3">
   <div class="mesh">
-    <div class="blob b2" style="top:5%;right:-5%"></div>
-    <div class="blob b1" style="bottom:0;left:-8%"></div>
+    <div class="blob b1" style="top:-5%;right:-8%"></div>
+    <div class="blob b2" style="bottom:-5%;left:-10%"></div>
+    <div class="blob b3" style="top:40%;left:60%"></div>
   </div>
   <div class="grid-bg"></div>
-  <div class="streak" style="top:40%;animation-delay:1s"></div>
+  <div class="streak" style="top:35%;animation-delay:1s"></div>
+  <div class="streak" style="top:80%;animation-delay:4.5s"></div>
   <div class="particles" id="pt3"></div>
+  <div class="glow-ring" style="width:280px;height:280px;top:8%;left:5%;animation-delay:1s"></div>
+  <div class="corner-line cl-tl"></div>
+  <div class="corner-line cl-br"></div>
   <div class="si">
     <div class="sh-tag f" style="transition-delay:.05s">Your Returns</div>
     <h2 class="sh-title f" style="transition-delay:.12s">Two Exits. Both Profitable.</h2>
@@ -339,12 +378,17 @@ background-size:60px 60px}
 <!-- ===== S4: WHY NOW ===== -->
 <section class="s" id="p4">
   <div class="mesh">
-    <div class="blob b1" style="top:5%;left:10%"></div>
-    <div class="blob b3" style="bottom:10%;right:5%"></div>
+    <div class="blob b1" style="top:0;left:5%"></div>
+    <div class="blob b2" style="bottom:-5%;right:0"></div>
+    <div class="blob b3" style="top:45%;right:40%"></div>
   </div>
   <div class="grid-bg"></div>
-  <div class="streak" style="top:55%;animation-delay:3s"></div>
+  <div class="streak" style="top:50%;animation-delay:3s"></div>
+  <div class="streak" style="top:20%;animation-delay:6s"></div>
   <div class="particles" id="pt4"></div>
+  <div class="glow-ring" style="width:220px;height:220px;bottom:12%;left:8%;animation-delay:4s"></div>
+  <div class="corner-line cl-tl"></div>
+  <div class="corner-line cl-br"></div>
   <div class="si">
     <div class="sh-tag f" style="transition-delay:.05s">Location &middot; Timing &middot; Protection</div>
     <h2 class="sh-title f" style="transition-delay:.12s">Why This. Why Now.</h2>
@@ -378,13 +422,18 @@ background-size:60px 60px}
 <!-- ===== S5: CTA ===== -->
 <section class="s" id="p5">
   <div class="mesh">
-    <div class="blob b1" style="top:20%;left:30%"></div>
-    <div class="blob b2" style="bottom:15%;right:20%"></div>
+    <div class="blob b1" style="top:10%;left:20%"></div>
+    <div class="blob b2" style="bottom:10%;right:15%"></div>
+    <div class="blob b3" style="top:50%;right:50%"></div>
   </div>
   <div class="grid-bg"></div>
-  <div class="streak" style="top:35%;animation-delay:1.5s"></div>
-  <div class="streak" style="top:70%;animation-delay:5s"></div>
+  <div class="streak" style="top:30%;animation-delay:1.5s"></div>
+  <div class="streak" style="top:72%;animation-delay:5s"></div>
   <div class="particles" id="pt5"></div>
+  <div class="glow-ring" style="width:350px;height:350px;top:15%;right:10%;animation-delay:2s"></div>
+  <div class="glow-ring" style="width:200px;height:200px;bottom:20%;left:10%;animation-delay:5s"></div>
+  <div class="corner-line cl-tl"></div>
+  <div class="corner-line cl-br"></div>
   <div class="si">
     <div class="f" style="transition-delay:.05s"><span style="font:700 11px var(--fb);letter-spacing:3px;text-transform:uppercase;padding:8px 20px;border-radius:24px;background:var(--limeG);color:var(--lime);border:1px solid rgba(139,195,74,.1)">Limited Phase 1 Plots</span></div>
     <h2 class="ct-h f" style="margin-top:24px;transition-delay:.15s">Become a<br><em style="color:var(--lime);font-style:italic">Growth Partner</em></h2>
@@ -412,20 +461,26 @@ const names=['Hook','How It Works','Your Returns','Why Now','Contact'];
 const dt=document.getElementById('dt');
 for(let i=0;i<total;i++){const d=document.createElement('button');d.className='d'+(i===0?' on':'');d.onclick=()=>nav(i);dt.appendChild(d)}
 
-// Floating particles
+// Floating particles - visible, glowing
 function spawnParticles(id,count){
   const c=document.getElementById(id);if(!c)return;
   for(let i=0;i<count;i++){
     const p=document.createElement('div');p.className='pt';
     p.style.left=Math.random()*100+'%';
-    p.style.animationDuration=(8+Math.random()*12)+'s';
-    p.style.animationDelay=(Math.random()*10)+'s';
-    p.style.width=p.style.height=(1.5+Math.random()*2.5)+'px';
-    if(Math.random()>.6)p.style.background='var(--gold)';
+    p.style.animationDuration=(6+Math.random()*10)+'s';
+    p.style.animationDelay=(Math.random()*8)+'s';
+    const size=2+Math.random()*4;
+    p.style.width=p.style.height=size+'px';
+    if(Math.random()>.5){
+      p.style.background='var(--gold)';
+      p.style.boxShadow='0 0 '+(size*2)+'px rgba(212,168,67,.4)';
+    }else{
+      p.style.boxShadow='0 0 '+(size*2)+'px rgba(139,195,74,.4)';
+    }
     c.appendChild(p);
   }
 }
-['pt1','pt2','pt3','pt4','pt5'].forEach(id=>spawnParticles(id,15));
+['pt1','pt2','pt3','pt4','pt5'].forEach(id=>spawnParticles(id,20));
 
 function go(idx){
   if(idx<0||idx>=total||idx===cur)return;

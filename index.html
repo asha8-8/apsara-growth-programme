@@ -34,6 +34,28 @@ body{font-family:var(--font-body);background:var(--cream);color:var(--forest);ov
 #fullscreenBtn{position:fixed;top:16px;right:16px;z-index:999;background:var(--glass);color:var(--white);border:1px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;font:600 12px var(--font-body);letter-spacing:0.5px;backdrop-filter:blur(12px);transition:var(--transition)}
 #fullscreenBtn:hover{background:var(--lime);color:var(--forest);border-color:var(--lime)}
 
+/* AUDIO CONTROLS */
+#audioControl{position:fixed;top:16px;left:16px;z-index:999;display:flex;align-items:center;gap:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.15);padding:6px 14px;border-radius:var(--radius-sm);backdrop-filter:blur(12px);transition:var(--transition)}
+#audioControl:hover{border-color:var(--lime)}
+#audioToggle{background:none;border:none;color:var(--white);cursor:pointer;font-size:20px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;transition:var(--transition);border-radius:50%}
+#audioToggle:hover{background:rgba(139,195,74,0.2)}
+#audioToggle.playing{color:var(--lime)}
+.audio-wave{display:flex;align-items:center;gap:2px;height:20px}
+.audio-wave .wave-bar{width:3px;background:var(--lime);border-radius:2px;transition:height 0.15s ease;opacity:0.4}
+.audio-wave.playing .wave-bar{opacity:1;animation:waveAnim 0.8s ease-in-out infinite alternate}
+.audio-wave .wave-bar:nth-child(1){height:6px;animation-delay:0s}
+.audio-wave .wave-bar:nth-child(2){height:12px;animation-delay:0.1s}
+.audio-wave .wave-bar:nth-child(3){height:8px;animation-delay:0.2s}
+.audio-wave .wave-bar:nth-child(4){height:16px;animation-delay:0.3s}
+.audio-wave .wave-bar:nth-child(5){height:10px;animation-delay:0.15s}
+.audio-wave .wave-bar:nth-child(6){height:14px;animation-delay:0.25s}
+.audio-wave .wave-bar:nth-child(7){height:6px;animation-delay:0.05s}
+@keyframes waveAnim{0%{height:4px}100%{height:18px}}
+#audioProgress{width:60px;height:3px;background:rgba(255,255,255,0.15);border-radius:2px;overflow:hidden;cursor:pointer}
+#audioProgressFill{height:100%;width:0%;background:var(--lime);border-radius:2px;transition:width 0.3s linear}
+#audioLabel{font:500 10px var(--font-body);color:rgba(255,255,255,0.5);letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+@media(max-width:600px){#audioLabel{display:none}#audioProgress{width:40px}}
+
 /* NAVIGATION */
 .nav-arrow{position:fixed;top:50%;z-index:998;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:var(--glass);border:1px solid rgba(255,255,255,0.12);color:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;backdrop-filter:blur(12px);transition:var(--transition)}
 .nav-arrow:hover{background:var(--lime);color:var(--forest);transform:translateY(-50%) scale(1.1)}
@@ -296,6 +318,18 @@ body{overflow:visible;height:auto}
 
 <!-- Fullscreen -->
 <button id="fullscreenBtn" onclick="toggleFullscreen()">View Fullscreen</button>
+
+<!-- Audio Control -->
+<div id="audioControl">
+  <button id="audioToggle" onclick="toggleAudio()" aria-label="Toggle narration">&#9655;</button>
+  <div class="audio-wave" id="audioWave">
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div>
+  </div>
+  <div id="audioProgress" onclick="seekAudio(event)"><div id="audioProgressFill"></div></div>
+  <span id="audioLabel">Narration Off</span>
+</div>
 
 <!-- Nav Arrows -->
 <button class="nav-arrow" id="prevBtn" onclick="goTo(current-1)" aria-label="Previous">&larr;</button>
@@ -920,6 +954,89 @@ function animateSection(idx) {
     }, 400);
   }
 }
+
+// ===== AUDIO ENGINE =====
+const audioPlayer = new Audio();
+let audioEnabled = false;
+let audioPlaying = false;
+const audioFiles = {};
+for (let i = 1; i <= 13; i++) {
+  audioFiles[i] = 'audio/slide_' + String(i).padStart(2, '0') + '.mp3';
+}
+
+function toggleAudio() {
+  audioEnabled = !audioEnabled;
+  const btn = document.getElementById('audioToggle');
+  const label = document.getElementById('audioLabel');
+  const wave = document.getElementById('audioWave');
+  if (audioEnabled) {
+    btn.innerHTML = '&#9646;&#9646;';
+    btn.classList.add('playing');
+    label.textContent = 'Playing';
+    playSlideAudio(current);
+  } else {
+    btn.innerHTML = '&#9655;';
+    btn.classList.remove('playing');
+    wave.classList.remove('playing');
+    label.textContent = 'Narration Off';
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+    audioPlaying = false;
+    document.getElementById('audioProgressFill').style.width = '0%';
+  }
+}
+
+function playSlideAudio(idx) {
+  if (!audioEnabled) return;
+  const file = audioFiles[idx + 1];
+  if (!file) return;
+  audioPlayer.pause();
+  audioPlayer.currentTime = 0;
+  audioPlayer.src = file;
+  audioPlayer.play().then(() => {
+    audioPlaying = true;
+    document.getElementById('audioWave').classList.add('playing');
+    document.getElementById('audioLabel').textContent = sectionNames[idx];
+    document.getElementById('audioToggle').innerHTML = '&#9646;&#9646;';
+  }).catch(() => {
+    // Autoplay blocked — user needs to click
+    document.getElementById('audioLabel').textContent = 'Click to play';
+  });
+}
+
+audioPlayer.addEventListener('timeupdate', () => {
+  if (audioPlayer.duration) {
+    const pct = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+    document.getElementById('audioProgressFill').style.width = pct + '%';
+  }
+});
+
+audioPlayer.addEventListener('ended', () => {
+  audioPlaying = false;
+  document.getElementById('audioWave').classList.remove('playing');
+  document.getElementById('audioProgressFill').style.width = '100%';
+});
+
+function seekAudio(e) {
+  if (!audioPlayer.duration) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  audioPlayer.currentTime = pct * audioPlayer.duration;
+}
+
+// Hook audio into slide transitions
+const originalGoTo = goTo;
+goTo = function(idx) {
+  if (idx < 0 || idx >= totalSlides || idx === current) return;
+  originalGoTo(idx);
+  // Slight delay so the slide transition starts first
+  setTimeout(() => playSlideAudio(current), 400);
+};
+
+// Keyboard: M to mute/unmute
+document.addEventListener('keydown', e => {
+  if (e.key === 'm' || e.key === 'M') toggleAudio();
+});
 
 // ===== INIT =====
 animateSection(0);

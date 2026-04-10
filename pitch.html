@@ -163,9 +163,68 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--t1);overflow:hid
 .cta-btn:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,168,67,.25)}
 .cta-legal{font:400 10px var(--font-b);color:var(--t3);max-width:500px;margin:24px auto 0;line-height:1.6}
 
+/* ===== PRESENTER AVATAR ===== */
+.presenter{position:absolute;z-index:3;pointer-events:none}
+.presenter svg{filter:drop-shadow(0 8px 24px rgba(0,0,0,0.3))}
+
+/* S1 presenter - bottom right */
+#p1 .presenter{bottom:40px;right:5%;animation:float 4s ease-in-out infinite}
+@media(max-width:768px){#p1 .presenter{bottom:20px;right:2%;transform:scale(0.7);transform-origin:bottom right}}
+@media(max-width:480px){#p1 .presenter{display:none}}
+
+/* S2 presenter - left side */
+#p2 .presenter{bottom:30px;left:2%;animation:float 4.5s ease-in-out infinite .5s}
+@media(max-width:768px){#p2 .presenter{transform:scale(0.65);transform-origin:bottom left;left:0;bottom:10px}}
+@media(max-width:480px){#p2 .presenter{display:none}}
+
+/* S3 presenter - right side pointing */
+#p3 .presenter{bottom:30px;right:3%;animation:float 4s ease-in-out infinite .3s}
+@media(max-width:768px){#p3 .presenter{transform:scale(0.65);transform-origin:bottom right;right:0}}
+@media(max-width:480px){#p3 .presenter{display:none}}
+
+/* S4 presenter - left */
+#p4 .presenter{bottom:30px;left:2%;animation:float 4.5s ease-in-out infinite}
+@media(max-width:768px){#p4 .presenter{transform:scale(0.65);transform-origin:bottom left;left:0}}
+@media(max-width:480px){#p4 .presenter{display:none}}
+
+/* S5 presenter - center bottom */
+#p5 .presenter{bottom:60px;right:8%;animation:float 4s ease-in-out infinite .2s}
+@media(max-width:768px){#p5 .presenter{transform:scale(0.6);transform-origin:bottom right;right:2%;bottom:30px}}
+@media(max-width:480px){#p5 .presenter{display:none}}
+
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* Speaking animation on mouth */
+.mouth-anim{animation:speak 0.4s ease-in-out infinite alternate}
+@keyframes speak{0%{ry:2}100%{ry:4}}
+
+/* Gesture hand animation */
+.gesture{animation:gest 2.5s ease-in-out infinite}
+@keyframes gest{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-8deg)}}
+
+/* Floating orbs for depth */
+.orb{position:absolute;border-radius:50%;pointer-events:none;z-index:1}
+.orb-1{width:200px;height:200px;background:radial-gradient(circle,rgba(139,195,74,0.04),transparent 70%);animation:orbFloat 12s ease-in-out infinite}
+.orb-2{width:150px;height:150px;background:radial-gradient(circle,rgba(212,168,67,0.03),transparent 70%);animation:orbFloat 15s ease-in-out infinite reverse}
+.orb-3{width:100px;height:100px;background:radial-gradient(circle,rgba(139,195,74,0.05),transparent 70%);animation:orbFloat 10s ease-in-out infinite 2s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(30px,-20px) scale(1.1)}50%{transform:translate(-20px,30px) scale(0.9)}75%{transform:translate(20px,20px) scale(1.05)}}
+
+/* Animated illustration elements */
+.illust{position:absolute;z-index:1;pointer-events:none;opacity:0.6}
+
+/* Coin stack animation */
+.coin-stack{animation:coinGrow 3s ease-out forwards}
+@keyframes coinGrow{0%{transform:scaleY(0);opacity:0}100%{transform:scaleY(1);opacity:0.7}}
+
+/* Growth arrow */
+.growth-arrow{animation:arrowPulse 2s ease-in-out infinite}
+@keyframes arrowPulse{0%,100%{opacity:0.5;transform:translateY(0)}50%{opacity:0.8;transform:translateY(-6px)}}
+
+@keyframes namaste{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-3px) scale(1.03)}}
+
 /* PRINT */
 @media print{
-#progress,.arrow,#dots,#slideNum,#audioCtrl{display:none!important}
+#progress,.arrow,#dots,#slideNum,#audioCtrl,.presenter,.orb{display:none!important}
 #deck{height:auto;overflow:visible}
 .sl{position:relative!important;opacity:1!important;transform:none!important;pointer-events:auto!important;page-break-after:always;min-height:100vh}
 .fi,.fi2,.step{opacity:1!important;transform:none!important}
@@ -189,6 +248,64 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--t1);overflow:hid
 
 <!-- ==================== SLIDE 1: HOOK ==================== -->
 <section class="sl active" id="p1">
+  <!-- Floating orbs -->
+  <div class="orb orb-1" style="top:10%;right:15%"></div>
+  <div class="orb orb-2" style="bottom:20%;left:10%"></div>
+  <!-- Presenter: Woman in saree, welcoming gesture -->
+  <div class="presenter">
+    <svg width="140" height="260" viewBox="0 0 140 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Hair -->
+      <ellipse cx="70" cy="42" rx="28" ry="30" fill="#1a1a2e"/>
+      <path d="M42 45 Q42 20 70 15 Q98 20 98 45" fill="#1a1a2e"/>
+      <!-- Face -->
+      <ellipse cx="70" cy="48" rx="22" ry="24" fill="#c68642"/>
+      <!-- Eyes -->
+      <ellipse cx="62" cy="44" rx="3" ry="2.5" fill="#1a1a2e"/>
+      <ellipse cx="78" cy="44" rx="3" ry="2.5" fill="#1a1a2e"/>
+      <circle cx="63" cy="43.5" r="1" fill="white" opacity="0.8"/>
+      <circle cx="79" cy="43.5" r="1" fill="white" opacity="0.8"/>
+      <!-- Eyebrows -->
+      <path d="M57 39 Q62 36 67 39" stroke="#1a1a2e" stroke-width="1.5" fill="none"/>
+      <path d="M73 39 Q78 36 83 39" stroke="#1a1a2e" stroke-width="1.5" fill="none"/>
+      <!-- Smile -->
+      <path d="M63 56 Q70 62 77 56" stroke="#8b4513" stroke-width="1.5" fill="none"/>
+      <!-- Bindi -->
+      <circle cx="70" cy="36" r="2" fill="#c62828"/>
+      <!-- Earrings -->
+      <circle cx="48" cy="52" r="3" fill="#d4a843"/>
+      <circle cx="92" cy="52" r="3" fill="#d4a843"/>
+      <!-- Neck -->
+      <rect x="62" y="70" width="16" height="12" rx="4" fill="#c68642"/>
+      <!-- Necklace -->
+      <path d="M55 82 Q70 92 85 82" stroke="#d4a843" stroke-width="2.5" fill="none"/>
+      <circle cx="70" cy="90" r="3" fill="#d4a843"/>
+      <!-- Saree body (green) -->
+      <path d="M40 82 Q38 130 42 180 L60 180 L60 82 Z" fill="#2d5016"/>
+      <path d="M80 82 Q82 130 78 180 L60 180 L60 82 Z" fill="#2d5016"/>
+      <path d="M100 82 Q102 130 98 180 L78 180 L80 82 Z" fill="#1a3a2a"/>
+      <!-- Saree pallu drape -->
+      <path d="M42 82 Q30 100 35 130 Q40 160 32 180" stroke="#8bc34a" stroke-width="2" fill="none" opacity="0.5"/>
+      <!-- Right arm (gesture up) -->
+      <g class="gesture" style="transform-origin:95px 100px">
+        <path d="M95 90 Q115 75 120 60" stroke="#c68642" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <!-- Open palm -->
+        <circle cx="120" cy="56" r="8" fill="#c68642"/>
+        <path d="M116 48 L114 42" stroke="#c68642" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M119 47 L118 40" stroke="#c68642" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M122 47 L123 40" stroke="#c68642" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M125 49 L127 43" stroke="#c68642" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <!-- Left arm -->
+      <path d="M45 92 Q30 110 35 135" stroke="#c68642" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <!-- Saree border -->
+      <path d="M40 180 L100 180" stroke="#d4a843" stroke-width="3"/>
+      <!-- Legs/feet -->
+      <rect x="50" y="180" width="14" height="60" rx="6" fill="#2d5016"/>
+      <rect x="72" y="180" width="14" height="60" rx="6" fill="#1a3a2a"/>
+      <ellipse cx="57" cy="242" rx="10" ry="5" fill="#8b4513"/>
+      <ellipse cx="79" cy="242" rx="10" ry="5" fill="#8b4513"/>
+    </svg>
+  </div>
   <div class="sl-inner">
     <div class="hook-tag fi">APSARA REALCON</div>
     <div class="hook-line fi" style="transition-delay:.1s"></div>
@@ -205,6 +322,49 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--t1);overflow:hid
 
 <!-- ==================== SLIDE 2: HOW IT WORKS ==================== -->
 <section class="sl" id="p2">
+  <div class="orb orb-3" style="top:15%;left:5%"></div>
+  <div class="orb orb-1" style="bottom:10%;right:5%"></div>
+  <!-- Presenter: explaining with clipboard -->
+  <div class="presenter">
+    <svg width="130" height="250" viewBox="0 0 130 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="65" cy="40" rx="26" ry="28" fill="#1a1a2e"/>
+      <path d="M39 42 Q39 18 65 13 Q91 18 91 42" fill="#1a1a2e"/>
+      <ellipse cx="65" cy="46" rx="20" ry="22" fill="#c68642"/>
+      <ellipse cx="57" cy="42" rx="2.8" ry="2.3" fill="#1a1a2e"/>
+      <ellipse cx="73" cy="42" rx="2.8" ry="2.3" fill="#1a1a2e"/>
+      <circle cx="58" cy="41.5" r="0.9" fill="white" opacity="0.8"/>
+      <circle cx="74" cy="41.5" r="0.9" fill="white" opacity="0.8"/>
+      <path d="M57 37 Q62 34 67 37" stroke="#1a1a2e" stroke-width="1.3" fill="none"/>
+      <path d="M63 37 Q68 34 73 37" stroke="#1a1a2e" stroke-width="1.3" fill="none"/>
+      <path d="M58 53 Q65 58 72 53" stroke="#8b4513" stroke-width="1.5" fill="none"/>
+      <circle cx="65" cy="34" r="1.8" fill="#c62828"/>
+      <circle cx="45" cy="50" r="2.5" fill="#d4a843"/>
+      <circle cx="85" cy="50" r="2.5" fill="#d4a843"/>
+      <rect x="57" y="66" width="16" height="11" rx="4" fill="#c68642"/>
+      <path d="M50 77 Q65 86 80 77" stroke="#d4a843" stroke-width="2" fill="none"/>
+      <path d="M35 77 Q33 125 37 172 L55 172 L55 77 Z" fill="#1a3a2a"/>
+      <path d="M75 77 Q77 125 73 172 L55 172 L55 77 Z" fill="#1a3a2a"/>
+      <path d="M95 77 Q97 125 93 172 L73 172 L75 77 Z" fill="#2d5016"/>
+      <path d="M37 77 Q25 95 30 125" stroke="#8bc34a" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <!-- Right arm holding clipboard -->
+      <path d="M90 85 Q105 95 100 120" stroke="#c68642" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <rect x="88" y="110" width="24" height="32" rx="3" fill="#e8ecdf" stroke="#aaa" stroke-width="1"/>
+      <line x1="93" y1="118" x2="107" y2="118" stroke="#8bc34a" stroke-width="2"/>
+      <line x1="93" y1="124" x2="105" y2="124" stroke="#ccc" stroke-width="1.5"/>
+      <line x1="93" y1="129" x2="103" y2="129" stroke="#ccc" stroke-width="1.5"/>
+      <line x1="93" y1="134" x2="106" y2="134" stroke="#ccc" stroke-width="1.5"/>
+      <!-- Left arm gesturing -->
+      <g class="gesture" style="transform-origin:40px 95px">
+        <path d="M40 88 Q22 78 18 65" stroke="#c68642" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <circle cx="16" cy="62" r="6" fill="#c68642"/>
+      </g>
+      <path d="M35 172 L95 172" stroke="#d4a843" stroke-width="2.5"/>
+      <rect x="44" y="172" width="13" height="55" rx="5" fill="#1a3a2a"/>
+      <rect x="67" y="172" width="13" height="55" rx="5" fill="#2d5016"/>
+      <ellipse cx="50" cy="230" rx="9" ry="4.5" fill="#8b4513"/>
+      <ellipse cx="73" cy="230" rx="9" ry="4.5" fill="#8b4513"/>
+    </svg>
+  </div>
   <div class="sl-inner">
     <div class="fi" style="transition-delay:.05s"><span style="font:600 11px var(--font-b);letter-spacing:3px;text-transform:uppercase;color:var(--lime);opacity:.7">The Structure</span></div>
     <h2 class="fi" style="font:800 clamp(26px,4vw,42px) var(--font-h);color:var(--white);margin:12px 0 4px;letter-spacing:-.3px;transition-delay:.1s">Four Steps. Zero Ambiguity.</h2>
@@ -250,6 +410,48 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--t1);overflow:hid
 
 <!-- ==================== SLIDE 3: RETURNS ==================== -->
 <section class="sl" id="p3">
+  <div class="orb orb-2" style="top:5%;right:10%"></div>
+  <div class="orb orb-3" style="bottom:15%;left:8%"></div>
+  <!-- Presenter: presenting with open hands -->
+  <div class="presenter">
+    <svg width="130" height="245" viewBox="0 0 130 245" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="65" cy="38" rx="26" ry="28" fill="#1a1a2e"/>
+      <path d="M39 40 Q39 16 65 11 Q91 16 91 40" fill="#1a1a2e"/>
+      <ellipse cx="65" cy="44" rx="20" ry="22" fill="#c68642"/>
+      <ellipse cx="57" cy="40" rx="2.8" ry="2.3" fill="#1a1a2e"/>
+      <ellipse cx="73" cy="40" rx="2.8" ry="2.3" fill="#1a1a2e"/>
+      <circle cx="58" cy="39.5" r="0.9" fill="white" opacity="0.8"/>
+      <circle cx="74" cy="39.5" r="0.9" fill="white" opacity="0.8"/>
+      <path d="M58 51 Q65 57 72 51" stroke="#8b4513" stroke-width="1.5" fill="none"/>
+      <circle cx="65" cy="32" r="1.8" fill="#c62828"/>
+      <circle cx="45" cy="48" r="2.5" fill="#d4a843"/>
+      <circle cx="85" cy="48" r="2.5" fill="#d4a843"/>
+      <rect x="57" y="64" width="16" height="11" rx="4" fill="#c68642"/>
+      <path d="M50 75 Q65 84 80 75" stroke="#d4a843" stroke-width="2" fill="none"/>
+      <!-- Saree - slightly different drape -->
+      <path d="M35 75 Q33 120 37 168 L55 168 L55 75 Z" fill="#2d5016"/>
+      <path d="M75 75 Q77 120 73 168 L55 168 L55 75 Z" fill="#2d5016"/>
+      <path d="M95 75 Q97 120 93 168 L73 168 L75 75 Z" fill="#1a3a2a"/>
+      <!-- Both arms presenting outward -->
+      <g class="gesture" style="transform-origin:90px 90px">
+        <path d="M90 85 Q110 80 118 70" stroke="#c68642" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <circle cx="120" cy="67" r="7" fill="#c68642"/>
+      </g>
+      <path d="M40 85 Q20 80 12 70" stroke="#c68642" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <circle cx="10" cy="67" r="7" fill="#c68642"/>
+      <!-- Animated chart floating above right hand -->
+      <g class="growth-arrow" style="transform-origin:center">
+        <rect x="105" y="38" width="28" height="22" rx="4" fill="var(--card)" stroke="var(--lime)" stroke-width="1" opacity="0.8"/>
+        <polyline points="110,55 117,48 121,51 128,42" stroke="var(--lime)" stroke-width="2" fill="none"/>
+        <polygon points="126,42 130,42 128,38" fill="var(--lime)"/>
+      </g>
+      <path d="M35 168 L95 168" stroke="#d4a843" stroke-width="2.5"/>
+      <rect x="44" y="168" width="13" height="55" rx="5" fill="#2d5016"/>
+      <rect x="67" y="168" width="13" height="55" rx="5" fill="#1a3a2a"/>
+      <ellipse cx="50" cy="226" rx="9" ry="4.5" fill="#8b4513"/>
+      <ellipse cx="73" cy="226" rx="9" ry="4.5" fill="#8b4513"/>
+    </svg>
+  </div>
   <div class="sl-inner">
     <div class="fi"><span style="font:600 11px var(--font-b);letter-spacing:3px;text-transform:uppercase;color:var(--lime);opacity:.7">Your Returns</span></div>
     <h2 class="fi" style="font:800 clamp(26px,4vw,42px) var(--font-h);color:var(--white);margin:12px 0 4px;letter-spacing:-.3px;transition-delay:.1s">Two Exits. Both Profitable.</h2>
@@ -288,6 +490,46 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--t1);overflow:hid
 
 <!-- ==================== SLIDE 4: WHY NOW ==================== -->
 <section class="sl" id="p4">
+  <div class="orb orb-1" style="top:8%;left:12%"></div>
+  <div class="orb orb-2" style="bottom:12%;right:8%"></div>
+  <!-- Presenter: pointing to location -->
+  <div class="presenter">
+    <svg width="130" height="245" viewBox="0 0 130 245" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="65" cy="38" rx="26" ry="28" fill="#1a1a2e"/>
+      <path d="M39 40 Q39 16 65 11 Q91 16 91 40" fill="#1a1a2e"/>
+      <ellipse cx="65" cy="44" rx="20" ry="22" fill="#c68642"/>
+      <ellipse cx="57" cy="40" rx="2.8" ry="2.3" fill="#1a1a2e"/>
+      <ellipse cx="73" cy="40" rx="2.8" ry="2.3" fill="#1a1a2e"/>
+      <circle cx="58" cy="39.5" r="0.9" fill="white" opacity="0.8"/>
+      <circle cx="74" cy="39.5" r="0.9" fill="white" opacity="0.8"/>
+      <path d="M58 51 Q65 57 72 51" stroke="#8b4513" stroke-width="1.5" fill="none"/>
+      <circle cx="65" cy="32" r="1.8" fill="#c62828"/>
+      <circle cx="45" cy="48" r="2.5" fill="#d4a843"/>
+      <circle cx="85" cy="48" r="2.5" fill="#d4a843"/>
+      <rect x="57" y="64" width="16" height="11" rx="4" fill="#c68642"/>
+      <path d="M50 75 Q65 84 80 75" stroke="#d4a843" stroke-width="2" fill="none"/>
+      <path d="M35 75 Q33 120 37 168 L55 168 L55 75 Z" fill="#1a3a2a"/>
+      <path d="M75 75 Q77 120 73 168 L55 168 L55 75 Z" fill="#1a3a2a"/>
+      <path d="M95 75 Q97 120 93 168 L73 168 L75 75 Z" fill="#2d5016"/>
+      <!-- Right arm pointing up -->
+      <g class="gesture" style="transform-origin:90px 88px">
+        <path d="M90 85 Q108 70 115 50" stroke="#c68642" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <circle cx="116" cy="47" r="5" fill="#c68642"/>
+        <line x1="116" y1="42" x2="116" y2="32" stroke="#c68642" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <!-- Location pin floating -->
+      <g class="growth-arrow">
+        <path d="M110 18 Q110 5 120 5 Q130 5 130 18 Q130 28 120 36 Q110 28 110 18Z" fill="#ef5350" opacity="0.9"/>
+        <circle cx="120" cy="17" r="4" fill="white" opacity="0.8"/>
+      </g>
+      <path d="M40 85 Q25 100 30 130" stroke="#c68642" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M35 168 L95 168" stroke="#d4a843" stroke-width="2.5"/>
+      <rect x="44" y="168" width="13" height="55" rx="5" fill="#1a3a2a"/>
+      <rect x="67" y="168" width="13" height="55" rx="5" fill="#2d5016"/>
+      <ellipse cx="50" cy="226" rx="9" ry="4.5" fill="#8b4513"/>
+      <ellipse cx="73" cy="226" rx="9" ry="4.5" fill="#8b4513"/>
+    </svg>
+  </div>
   <div class="sl-inner">
     <div class="fi"><span style="font:600 11px var(--font-b);letter-spacing:3px;text-transform:uppercase;color:var(--lime);opacity:.7">Location &middot; Timing &middot; Protection</span></div>
     <h2 class="fi" style="font:800 clamp(26px,4vw,42px) var(--font-h);color:var(--white);margin:12px 0 4px;letter-spacing:-.3px;transition-delay:.1s">Why This. Why Now.</h2>
@@ -323,6 +565,42 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--t1);overflow:hid
 
 <!-- ==================== SLIDE 5: CTA ==================== -->
 <section class="sl" id="p5">
+  <div class="orb orb-1" style="top:15%;left:20%"></div>
+  <div class="orb orb-3" style="bottom:20%;right:15%"></div>
+  <!-- Presenter: namaste gesture -->
+  <div class="presenter">
+    <svg width="130" height="245" viewBox="0 0 130 245" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="65" cy="38" rx="26" ry="28" fill="#1a1a2e"/>
+      <path d="M39 40 Q39 16 65 11 Q91 16 91 40" fill="#1a1a2e"/>
+      <ellipse cx="65" cy="44" rx="20" ry="22" fill="#c68642"/>
+      <ellipse cx="57" cy="40" rx="2.8" ry="2.3" fill="#1a1a2e"/>
+      <ellipse cx="73" cy="40" rx="2.8" ry="2.3" fill="#1a1a2e"/>
+      <circle cx="58" cy="39.5" r="0.9" fill="white" opacity="0.8"/>
+      <circle cx="74" cy="39.5" r="0.9" fill="white" opacity="0.8"/>
+      <path d="M60 52 Q65 58 70 52" stroke="#8b4513" stroke-width="1.5" fill="none"/>
+      <circle cx="65" cy="32" r="1.8" fill="#c62828"/>
+      <circle cx="45" cy="48" r="2.5" fill="#d4a843"/>
+      <circle cx="85" cy="48" r="2.5" fill="#d4a843"/>
+      <rect x="57" y="64" width="16" height="11" rx="4" fill="#c68642"/>
+      <path d="M50 75 Q65 84 80 75" stroke="#d4a843" stroke-width="2" fill="none"/>
+      <path d="M35 75 Q33 120 37 168 L55 168 L55 75 Z" fill="#2d5016"/>
+      <path d="M75 75 Q77 120 73 168 L55 168 L55 75 Z" fill="#2d5016"/>
+      <path d="M95 75 Q97 120 93 168 L73 168 L75 75 Z" fill="#1a3a2a"/>
+      <!-- Namaste hands (both hands together) -->
+      <path d="M90 85 Q85 95 75 100" stroke="#c68642" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M40 85 Q45 95 55 100" stroke="#c68642" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <!-- Joined palms -->
+      <g style="animation:namaste 3s ease-in-out infinite">
+        <path d="M55 92 L65 80 L75 92 L65 104 Z" fill="#c68642"/>
+        <line x1="65" y1="82" x2="65" y2="102" stroke="#b8763a" stroke-width="0.5" opacity="0.3"/>
+      </g>
+      <path d="M35 168 L95 168" stroke="#d4a843" stroke-width="2.5"/>
+      <rect x="44" y="168" width="13" height="55" rx="5" fill="#2d5016"/>
+      <rect x="67" y="168" width="13" height="55" rx="5" fill="#1a3a2a"/>
+      <ellipse cx="50" cy="226" rx="9" ry="4.5" fill="#8b4513"/>
+      <ellipse cx="73" cy="226" rx="9" ry="4.5" fill="#8b4513"/>
+    </svg>
+  </div>
   <div class="sl-inner">
     <div class="fi" style="transition-delay:.05s"><span style="font:700 11px var(--font-b);letter-spacing:3px;text-transform:uppercase;padding:8px 20px;border-radius:24px;background:var(--lime-glow);color:var(--lime);border:1px solid rgba(139,195,74,.12)">Limited Phase 1 Plots</span></div>
     <h2 class="cta-headline fi" style="margin-top:24px;transition-delay:.15s">Become a<br><em style="color:var(--lime);font-style:italic">Growth Partner</em></h2>

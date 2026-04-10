@@ -319,14 +319,16 @@ body{font-family:var(--font-body);background:var(--bg-1);color:var(--text-primar
 
 /* ========== COMPREHENSIVE MOBILE FIXES ========== */
 @media(max-width:480px){
-  /* Hero — proper fit */
-  #s1{padding:60px 20px 80px!important;justify-content:center}
-  .hero-brand{letter-spacing:6px;font-size:11px}
-  .hero-title{font-size:28px!important;line-height:1.15;letter-spacing:-0.5px}
-  .hero-subtitle{font-size:15px!important;margin-bottom:8px}
-  .hero-tags{gap:6px;margin-bottom:28px}
-  .hero-tag{font-size:8px;padding:6px 12px;letter-spacing:1px}
-  .hero-line{margin-bottom:16px}
+  /* Hero — proper fit on small screens */
+  #s1{padding:40px 0 70px!important;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh}
+  #s1>div{padding:0 16px!important;max-width:100%!important;display:flex;flex-direction:column;align-items:center}
+  .hero-brand{letter-spacing:5px;font-size:10px;margin-bottom:10px}
+  .hero-title{font-size:26px!important;line-height:1.18;letter-spacing:-0.3px;margin-bottom:8px}
+  .hero-subtitle{font-size:14px!important;margin-bottom:8px}
+  .hero-tags{gap:5px;margin-bottom:24px}
+  .hero-tag{font-size:8px;padding:5px 10px;letter-spacing:1px}
+  .hero-line{margin-bottom:12px}
+  .hero-stats{gap:10px;max-width:100%}
 
   /* Nav chrome */
   #fullscreenBtn{display:none}
@@ -862,7 +864,13 @@ function updateUI(){
   n.style.opacity=current===totalSlides-1?'0.3':'1';n.style.pointerEvents=current===totalSlides-1?'none':'auto';
 }
 
-function startAuto(){stopAuto();autoTimer=setInterval(()=>{current<totalSlides-1?goTo(current+1):goTo(0)},AUTO_INTERVAL)}
+function advanceNext(){if(current<totalSlides-1)goTo(current+1);else goTo(0)}
+function startAuto(){
+  stopAuto();
+  // If audio is playing, don't start timer — the 'ended' event will advance
+  if(audioEnabled&&audioPlaying)return;
+  autoTimer=setInterval(advanceNext,AUTO_INTERVAL);
+}
 function stopAuto(){if(autoTimer){clearInterval(autoTimer);autoTimer=null}}
 function userInteracted(){stopAuto();if(resumeTimer)clearTimeout(resumeTimer);resumeTimer=setTimeout(startAuto,RESUME_DELAY)}
 document.getElementById('slideContainer').addEventListener('mouseenter',stopAuto);
@@ -906,11 +914,23 @@ function toggleAudio(){
 }
 function playSlideAudio(idx){
   if(!audioEnabled)return;const f=audioFiles[idx+1];if(!f)return;
+  // Stop auto-advance timer — narration controls the pace now
+  stopAuto();
   audioPlayer.pause();audioPlayer.currentTime=0;audioPlayer.src=f;
   audioPlayer.play().then(()=>{audioPlaying=true;document.getElementById('audioWave').classList.add('playing');document.getElementById('audioLabel').textContent=sectionNames[idx];document.getElementById('audioToggle').innerHTML='&#9646;&#9646;'}).catch(()=>{document.getElementById('audioLabel').textContent='Click to play'});
 }
 audioPlayer.addEventListener('timeupdate',()=>{if(audioPlayer.duration){document.getElementById('audioProgressFill').style.width=(audioPlayer.currentTime/audioPlayer.duration*100)+'%'}});
-audioPlayer.addEventListener('ended',()=>{audioPlaying=false;document.getElementById('audioWave').classList.remove('playing');document.getElementById('audioProgressFill').style.width='100%'});
+audioPlayer.addEventListener('ended',()=>{
+  audioPlaying=false;
+  document.getElementById('audioWave').classList.remove('playing');
+  document.getElementById('audioProgressFill').style.width='100%';
+  // Narration finished — advance to next slide after a short pause
+  if(audioEnabled){
+    setTimeout(()=>{if(current<totalSlides-1)goTo(current+1);else goTo(0)},1500);
+  }else{
+    startAuto();
+  }
+});
 function seekAudio(e){if(!audioPlayer.duration)return;const r=e.currentTarget.getBoundingClientRect();audioPlayer.currentTime=((e.clientX-r.left)/r.width)*audioPlayer.duration}
 
 animateSection(0);startAuto();updateUI();
